@@ -372,7 +372,7 @@ public:
 	// Not exposed to users
 	TileMapCell get_cell(int p_layer, const Vector2i &p_coords, bool p_use_proxies = false) const;
 	HashMap<Vector2i, TileMapQuadrant> *get_quadrant_map(int p_layer);
-	int get_effective_quadrant_size(int p_layer) const;
+	Vector2i get_effective_quadrant_size(int p_layer) const;
 	//---
 
 	virtual void set_y_sort_enabled(bool p_enable) override;

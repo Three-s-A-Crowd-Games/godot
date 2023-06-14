@@ -467,14 +467,14 @@ Vector2i TileMap::transform_coords_layout(const Vector2i &p_coords, TileSet::Til
 	return output;
 }
 
-int TileMap::get_effective_quadrant_size(int p_layer) const {
-	ERR_FAIL_INDEX_V(p_layer, (int)layers.size(), 1);
+Vector2i TileMap::get_effective_quadrant_size(int p_layer) const {
+	ERR_FAIL_INDEX_V(p_layer, (int)layers.size(), Vector2i(1, 1));
 
 	// When using YSort, the quadrant size is reduced to 1 to have one CanvasItem per quadrant
 	if (is_y_sort_enabled() && layers[p_layer].y_sort_enabled) {
-		return 1;
+		return Vector2i(quadrant_size * quadrant_size, 1);
 	} else {
-		return quadrant_size;
+		return Vector2i(quadrant_size, quadrant_size);
 	}
 }
 
@@ -776,12 +776,12 @@ void TileMap::set_y_sort_enabled(bool p_enable) {
 }
 
 Vector2i TileMap::_coords_to_quadrant_coords(int p_layer, const Vector2i &p_coords) const {
-	int quad_size = get_effective_quadrant_size(p_layer);
+	Vector2i quad_size = get_effective_quadrant_size(p_layer);
 
 	// Rounding down, instead of simply rounding towards zero (truncating)
 	return Vector2i(
-			p_coords.x > 0 ? p_coords.x / quad_size : (p_coords.x - (quad_size - 1)) / quad_size,
-			p_coords.y > 0 ? p_coords.y / quad_size : (p_coords.y - (quad_size - 1)) / quad_size);
+			p_coords.x > 0 ? p_coords.x / quad_size.x : (p_coords.x - (quad_size.x - 1)) / quad_size.x,
+			p_coords.y > 0 ? p_coords.y / quad_size.y : (p_coords.y - (quad_size.y - 1)) / quad_size.y);
 }
 
 HashMap<Vector2i, TileMapQuadrant>::Iterator TileMap::_create_quadrant(int p_layer, const Vector2i &p_qk) {
