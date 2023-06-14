@@ -52,6 +52,7 @@ class NavMap : public NavRid {
 	/// each cell has the following cell_size.
 	real_t cell_size = 0.25;
 
+	bool use_edge_connections = true;
 	/// This value is used to detect the near edges to connect.
 	real_t edge_connection_margin = 0.25;
 
@@ -111,6 +112,11 @@ public:
 	void set_cell_size(float p_cell_size);
 	float get_cell_size() const {
 		return cell_size;
+	}
+
+	void set_use_edge_connections(bool p_enabled);
+	bool get_use_edge_connections() const {
+		return use_edge_connections;
 	}
 
 	void set_edge_connection_margin(float p_edge_connection_margin);
